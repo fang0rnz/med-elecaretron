@@ -2,4 +2,4 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 Running:
 
-Run the project with <code>npm install/code> then <code>npm run dev</code>
+Run the project with <code>npm install</code> then <code>npm run dev</code>
