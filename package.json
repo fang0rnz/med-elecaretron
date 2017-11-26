@@ -18,8 +18,16 @@
     "dev": "nf start"
   },
   "devDependencies": {
+    "babel-eslint": "^8.0.2",
     "electron": "^1.7.9",
     "electron-devtools-installer": "^2.2.1",
-    "foreman": "^2.0.0"
+    "eslint": "^4.12.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-prettier": "^2.3.1",
+    "foreman": "^2.0.0",
+    "lint-staged": "^5.0.0",
+    "prettier": "^1.8.2",
+    "prettier-eslint": "^8.2.2",
+    "prettier-eslint-cli": "^4.4.0"
   }
 }
