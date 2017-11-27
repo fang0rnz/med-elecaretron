@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import Patient from './Patient';
 import PatientForm from './PatientForm';
-import './css/App.css';
 
 const patients = [
   {
@@ -50,6 +49,15 @@ class App extends Component {
     };
   }
 
+  createFunction(patient) {
+    let patients = [...this.state.patients];
+    patients.push(patient);
+
+    this.setState({
+      patients,
+    });
+  }
+
   deleteFunction(i) {
     let patients = [...this.state.patients];
 
@@ -70,7 +78,7 @@ class App extends Component {
       <div className="container">
         <div className="row">
           <div className="col-md-12 patient-list">
-            <PatientForm />
+            <PatientForm create={this.createFunction.bind(this)} />
             {this.state.patients.map((patient, i) => (
               <Patient
                 key={i}

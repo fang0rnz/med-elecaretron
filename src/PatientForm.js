@@ -3,38 +3,47 @@ import React, {Component} from 'react';
 class PatientForm extends Component {
   constructor({patient}) {
     super();
+    this.initialState = {
+      name: '',
+      email: '',
+      birthdate: '',
+      number: '',
+      address: {
+        number: '',
+        zip: '',
+        state: '',
+        street: '',
+      },
+      id: '',
+    };
     this.state = {
-      fullName: (patient && patient.name) || '',
+      name: patient && patient.name,
       email: patient && patient.email,
       birthdate: patient && patient.birthdate,
-      cellphone: patient && patient.number,
-      streetName: patient && patient.address.street,
-      addrNum: patient && patient.address.number,
-      zipCode: patient && patient.address.zip,
-      state: patient && patient.address.state,
+      number: patient && patient.number,
+      address: {
+        number: patient && patient.address.number,
+        zip: patient && patient.address.zip,
+        state: patient && patient.address.state,
+        street: patient && patient.address.street,
+      },
       id: patient && patient.id,
+      isCreating: patient ? false : true,
     };
   }
 
-  clearAll() {
-    this.setState({
-      fullName: '',
-      email: '',
-      birthdate: '',
-      cellphone: '',
-      streetName: '',
-      addrNum: '',
-      zipCode: '',
-      state: '',
-    });
-  }
-
   submit() {
-    this.props.edit(this.state.id, this.state);
+    if (!this.state.isCreating) {
+      this.props.edit(this.state.id, this.state);
+      this.props.toggleEdit();
+    } else {
+      this.props.create(this.state);
+      this.setState(this.initialState);
+    }
   }
 
   changeFullName(e) {
-    this.setState({fullName: e.target.value});
+    this.setState({name: e.target.value});
   }
 
   changeEmail(e) {
@@ -46,23 +55,43 @@ class PatientForm extends Component {
   }
 
   changeCellphone(e) {
-    this.setState({cellphone: e.target.value});
+    this.setState({number: e.target.value});
   }
 
   changeStreetName(e) {
-    this.setState({streetName: e.target.value});
+    let address = {...this.state.address};
+    address.street = e.target.value;
+
+    this.setState({
+      address,
+    });
   }
 
   changeAddrNum(e) {
-    this.setState({addrNum: e.target.value});
+    let address = {...this.state.address};
+    address.number = e.target.value;
+
+    this.setState({
+      address,
+    });
   }
 
   changeZipCode(e) {
-    this.setState({zipCode: e.target.value});
+    let address = {...this.state.address};
+    address.zip = e.target.value;
+
+    this.setState({
+      address,
+    });
   }
 
   changeState(e) {
-    this.setState({state: e.target.value});
+    let address = {...this.state.address};
+    address.state = e.target.value;
+
+    this.setState({
+      address,
+    });
   }
 
   render() {
@@ -72,7 +101,7 @@ class PatientForm extends Component {
           <div className="input-group">
             <input
               id="name"
-              value={this.state.fullName}
+              value={this.state.name}
               onChange={this.changeFullName.bind(this)}
               type="text"
               className="form-control"
@@ -103,7 +132,7 @@ class PatientForm extends Component {
 
             <input
               id="number"
-              value={this.state.cellphone}
+              value={this.state.number}
               onChange={this.changeCellphone.bind(this)}
               type="text"
               className="form-control"
@@ -114,7 +143,7 @@ class PatientForm extends Component {
           <div className="input-group">
             <input
               id="street"
-              value={this.state.streetName}
+              value={this.state.address.street}
               onChange={this.changeStreetName.bind(this)}
               type="text"
               className="form-control"
@@ -124,7 +153,7 @@ class PatientForm extends Component {
 
             <input
               id="address-number"
-              value={this.state.addrNum}
+              value={this.state.address.number}
               onChange={this.changeAddrNum.bind(this)}
               type="text"
               className="form-control"
@@ -134,7 +163,7 @@ class PatientForm extends Component {
 
             <input
               id="zipcode"
-              value={this.state.zipCode}
+              value={this.state.address.zip}
               onChange={this.changeZipCode.bind(this)}
               type="text"
               className="form-control"
@@ -144,7 +173,7 @@ class PatientForm extends Component {
 
             <input
               id="address-state"
-              value={this.state.state}
+              value={this.state.address.state}
               onChange={this.changeState.bind(this)}
               type="text"
               className="form-control"
@@ -160,8 +189,8 @@ class PatientForm extends Component {
             </button>
           </div>
           <div className="col-6">
-            <button onClick={this.clearAll.bind(this)} type="button" className="btn btn-danger btn-block">
-              Clear all
+            <button onClick={this.props.toggleEdit} type="button" className="btn btn-danger btn-block">
+              Cancel
             </button>
           </div>
         </div>

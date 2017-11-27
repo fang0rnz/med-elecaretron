@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import './css/Patient.css';
 import PatientForm from './PatientForm';
 
 class Patient extends Component {
@@ -12,7 +11,7 @@ class Patient extends Component {
 
   editPatient() {
     this.setState({
-      isEditing: true,
+      isEditing: !this.state.isEditing,
     });
   }
 
@@ -55,7 +54,7 @@ class Patient extends Component {
           {!this.state.isEditing ? (
             this.renderCard(name, number, email, birthdate, address)
           ) : (
-            <PatientForm edit={this.props.edit} patient={this.props.data} />
+            <PatientForm edit={this.props.edit} patient={this.props.data} toggleEdit={this.editPatient.bind(this)} />
           )}
         </div>
       </div>
