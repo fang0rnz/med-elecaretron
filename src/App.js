@@ -53,13 +53,24 @@ class App extends Component {
     };
   }
 
+  deleteFunction(i) {
+    let patients = [...this.state.patients];
+
+    patients.splice(i, 1);
+    this.setState({
+      patients,
+    });
+  }
+
   render() {
     return (
       <div className="container">
         <div className="row">
           <div className="col-md-12 patient-list">
             <PatientForm />
-            {this.state.patients.map((patient, i) => <Patient key={i++} data={patient} />)}
+            {this.state.patients.map((patient, i) => (
+              <Patient key={i++} data={patient} remove={() => this.deleteFunction(i - 1)} />
+            ))}
           </div>
         </div>
       </div>
