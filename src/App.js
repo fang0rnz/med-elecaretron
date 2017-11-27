@@ -14,7 +14,6 @@ const patients = [
       number: 9,
       zip: 99999,
       state: 'ES',
-      country: 'Brazil',
     },
   },
   {
@@ -27,7 +26,6 @@ const patients = [
       number: 55,
       zip: 55555,
       state: 'ES',
-      country: 'Brazil',
     },
   },
   {
@@ -40,7 +38,6 @@ const patients = [
       number: 1,
       zip: 11111,
       state: 'ES',
-      country: 'Brazil',
     },
   },
 ];
@@ -62,6 +59,12 @@ class App extends Component {
     });
   }
 
+  editFunction(i, patient) {
+    let patients = [...this.state.patients];
+    patients[i] = patient;
+    this.setState({patients: patients});
+  }
+
   render() {
     return (
       <div className="container">
@@ -69,7 +72,12 @@ class App extends Component {
           <div className="col-md-12 patient-list">
             <PatientForm />
             {this.state.patients.map((patient, i) => (
-              <Patient key={i++} data={patient} remove={() => this.deleteFunction(i - 1)} />
+              <Patient
+                key={i}
+                data={Object.assign({id: i}, patient)}
+                remove={() => this.deleteFunction(i)}
+                edit={this.editFunction.bind(this)}
+              />
             ))}
           </div>
         </div>

@@ -1,9 +1,23 @@
 import React, {Component} from 'react';
 
 class PatientForm extends Component {
-  constructor() {
+  constructor({patient}) {
     super();
     this.state = {
+      fullName: (patient && patient.name) || '',
+      email: patient && patient.email,
+      birthdate: patient && patient.birthdate,
+      cellphone: patient && patient.number,
+      streetName: patient && patient.address.street,
+      addrNum: patient && patient.address.number,
+      zipCode: patient && patient.address.zip,
+      state: patient && patient.address.state,
+      id: patient && patient.id,
+    };
+  }
+
+  clearAll() {
+    this.setState({
       fullName: '',
       email: '',
       birthdate: '',
@@ -12,7 +26,11 @@ class PatientForm extends Component {
       addrNum: '',
       zipCode: '',
       state: '',
-    };
+    });
+  }
+
+  submit() {
+    this.props.edit(this.state.id, this.state);
   }
 
   changeFullName(e) {
@@ -52,9 +70,6 @@ class PatientForm extends Component {
       <div className="card">
         <div className="card-body">
           <div className="input-group">
-            <span className="input-group-addon">
-              <i className="glyphicon glyphicon-lock" />
-            </span>
             <input
               id="name"
               value={this.state.fullName}
@@ -64,9 +79,7 @@ class PatientForm extends Component {
               name="name"
               placeholder="Full name"
             />
-            <span className="input-group-addon">
-              <i className="glyphicon glyphicon-lock" />
-            </span>
+
             <input
               id="email"
               value={this.state.email}
@@ -78,9 +91,6 @@ class PatientForm extends Component {
             />
           </div>
           <div className="input-group">
-            <span className="input-group-addon">
-              <i className="glyphicon glyphicon-lock" />
-            </span>
             <input
               id="birthdate"
               value={this.state.birthdate}
@@ -90,9 +100,7 @@ class PatientForm extends Component {
               name="birthdate"
               placeholder="Birthdate"
             />
-            <span className="input-group-addon">
-              <i className="glyphicon glyphicon-lock" />
-            </span>
+
             <input
               id="number"
               value={this.state.cellphone}
@@ -104,9 +112,6 @@ class PatientForm extends Component {
             />
           </div>
           <div className="input-group">
-            <span className="input-group-addon">
-              <i className="glyphicon glyphicon-lock" />
-            </span>
             <input
               id="street"
               value={this.state.streetName}
@@ -116,9 +121,7 @@ class PatientForm extends Component {
               name="street"
               placeholder="Street"
             />
-            <span className="input-group-addon">
-              <i className="glyphicon glyphicon-lock" />
-            </span>
+
             <input
               id="address-number"
               value={this.state.addrNum}
@@ -128,9 +131,7 @@ class PatientForm extends Component {
               name="address-number"
               placeholder="Addr. number"
             />
-            <span className="input-group-addon">
-              <i className="glyphicon glyphicon-lock" />
-            </span>
+
             <input
               id="zipcode"
               value={this.state.zipCode}
@@ -140,9 +141,7 @@ class PatientForm extends Component {
               name="zipcode"
               placeholder="Zip code"
             />
-            <span className="input-group-addon">
-              <i className="glyphicon glyphicon-lock" />
-            </span>
+
             <input
               id="address-state"
               value={this.state.state}
@@ -156,12 +155,12 @@ class PatientForm extends Component {
         </div>
         <div className="row mb-3">
           <div className="col-6">
-            <button type="button" className="btn btn-success btn-block">
+            <button onClick={this.submit.bind(this)} type="button" className="btn btn-success btn-block">
               Submit
             </button>
           </div>
           <div className="col-6">
-            <button type="button" className="btn btn-danger btn-block">
+            <button onClick={this.clearAll.bind(this)} type="button" className="btn btn-danger btn-block">
               Clear all
             </button>
           </div>
