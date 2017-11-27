@@ -1,10 +1,4 @@
-.aligner {
-  display: flex;
-  align-items: center;
-  min-height: 24em;
-  justify-content: center;
-}
-
-.aligner-item {
-  max-width: 50%;
+.patient-list {
+  border-style: solid;
+  min-height: 200px;
 }
