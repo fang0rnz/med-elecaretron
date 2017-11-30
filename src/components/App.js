@@ -50,6 +50,10 @@ class App extends Component {
     };
   }
 
+  componentDidMount() {
+    console.log(this.props);
+  }
+
   createFunction(patient) {
     let patients = [...this.state.patients];
     patients.push(patient);
