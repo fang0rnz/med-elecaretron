@@ -15,6 +15,7 @@ class PatientForm extends Component {
         street: '',
       },
       id: '',
+      isCreating: true,
     };
   }
 

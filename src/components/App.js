@@ -3,55 +3,24 @@ import Patient from './Patient';
 import PatientForm from './PatientForm';
 import {Link, Redirect} from 'react-router-dom';
 
-const patients = [
-  {
-    name: 'Rômulo Designer',
-    number: 999999999,
-    email: 'romulo@design.com',
-    birthdate: '06/06/1980',
-    address: {
-      street: 'Rua do design',
-      number: 9,
-      zip: 99999,
-      state: 'ES',
-    },
-  },
-  {
-    name: 'Freddy Brasileiro',
-    number: 555555555,
-    email: 'freddy@brasil.com',
-    birthdate: '05/05/1955',
-    address: {
-      street: 'Rua Brasil',
-      number: 55,
-      zip: 55555,
-      state: 'ES',
-    },
-  },
-  {
-    name: 'André Metzen',
-    number: 111111111,
-    email: 'metzen@confianca.com',
-    birthdate: '01/02/1983',
-    address: {
-      street: 'Rua da confiança',
-      number: 1,
-      zip: 11111,
-      state: 'ES',
-    },
-  },
-];
-
 class App extends Component {
   constructor(props) {
     super();
     this.state = {
-      patients: patients,
+      patients: [],
     };
   }
 
-  componentDidMount() {
-    console.log(this.props);
+  componentWillMount() {
+    this.props.db.findOne({clinicName: this.props.match.params.clinicId}, (err, clinic) => {
+      if (!clinic) this.props.db.insert({clinicName: this.props.match.params.clinicId, patients: []});
+      else
+        this.setState({
+          patients: clinic.patients,
+        });
+    });
+
+    console.log(this.props.match.params.clinicId);
   }
 
   createFunction(patient) {
