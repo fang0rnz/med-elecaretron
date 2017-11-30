@@ -1,9 +1,0 @@
-version: 0.1.0
-files:
-  - url: med-elecaretron-0.1.0-x86_64.AppImage
-    sha512: +tAn0LeQMlZMGw45XSbLrPFTnWskdsIQSmmHjM/jx6QjfdLCXHGgWF+JPpd8Q2DirRPT6mT6CiVmLyp5+qP5iw==
-    size: 53416098
-    blockMapSize: 96742
-path: med-elecaretron-0.1.0-x86_64.AppImage
-sha512: +tAn0LeQMlZMGw45XSbLrPFTnWskdsIQSmmHjM/jx6QjfdLCXHGgWF+JPpd8Q2DirRPT6mT6CiVmLyp5+qP5iw==
-releaseDate: '2017-11-27T22:00:55.349Z'
