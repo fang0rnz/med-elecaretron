@@ -3,6 +3,8 @@ import Patient from './Patient';
 import PatientForm from './PatientForm';
 import {Link, Redirect} from 'react-router-dom';
 
+const nedb = window.require('electron').remote.getGlobal('sharedObj').prop1;
+
 const patients = [
   {
     name: 'Rômulo Designer',
@@ -52,6 +54,9 @@ class App extends Component {
 
   componentDidMount() {
     console.log(this.props);
+    console.log(nedb);
+
+    nedb.find({teste: 'teste'}, (err, docs) => console.log(err, docs));
   }
 
   createFunction(patient) {
