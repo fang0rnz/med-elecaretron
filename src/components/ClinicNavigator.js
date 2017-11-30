@@ -46,7 +46,7 @@ class ClinicNavigator extends Component {
         </div>
       </div>
     ) : (
-      <Redirect to={'/clinic/' + this.state.clinicName} push teste="aaa" />
+      <Redirect to={'/clinic/' + this.state.clinicName} push />
     );
   }
 }

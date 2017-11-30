@@ -13,9 +13,8 @@ const url = require('url');
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 const db = new Datastore({
-  filename: './tasks.json',
+  filename: './clinics.json',
   autoload: true,
-  timestampData: true,
 });
 global.sharedObj = {prop1: db};
 

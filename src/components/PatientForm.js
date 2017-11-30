@@ -4,17 +4,19 @@ class PatientForm extends Component {
   constructor() {
     super();
     this.initialState = {
-      name: '',
-      email: '',
-      birthdate: '',
-      number: '',
-      address: {
+      patient: {
+        name: '',
+        email: '',
+        birthdate: '',
         number: '',
-        zip: '',
-        state: '',
-        street: '',
+        address: {
+          number: '',
+          zip: '',
+          state: '',
+          street: '',
+        },
+        id: '',
       },
-      id: '',
       isCreating: true,
     };
   }
@@ -23,80 +25,99 @@ class PatientForm extends Component {
     this.setState(this.initialState);
     if (this.props.patient)
       this.setState({
-        name: this.props.patient && this.props.patient.name,
-        email: this.props.patient && this.props.patient.email,
-        birthdate: this.props.patient && this.props.patient.birthdate,
-        number: this.props.patient && this.props.patient.number,
-        address: {
-          number: this.props.patient && this.props.patient.address.number,
-          zip: this.props.patient && this.props.patient.address.zip,
-          state: this.props.patient && this.props.patient.address.state,
-          street: this.props.patient && this.props.patient.address.street,
+        patient: {
+          name: this.props.patient && this.props.patient.name,
+          email: this.props.patient && this.props.patient.email,
+          birthdate: this.props.patient && this.props.patient.birthdate,
+          number: this.props.patient && this.props.patient.number,
+          address: {
+            number: this.props.patient && this.props.patient.address.number,
+            zip: this.props.patient && this.props.patient.address.zip,
+            state: this.props.patient && this.props.patient.address.state,
+            street: this.props.patient && this.props.patient.address.street,
+          },
+          id: this.props.patient && this.props.patient.id,
         },
-        id: this.props.patient && this.props.patient.id,
         isCreating: this.props.patient ? false : true,
       });
   }
 
   submit() {
     if (!this.state.isCreating) {
-      this.props.edit(this.state.id, this.state);
+      this.props.edit(this.state.patient);
       this.props.toggleEdit();
     } else {
-      this.props.create(this.state);
+      this.props.create(this.state.patient);
       this.setState(this.initialState);
     }
   }
 
   changeFullName(e) {
-    this.setState({name: e.target.value});
+    this.setState({
+      patient: {
+        ...this.state.patient,
+        name: e.target.value,
+      },
+    });
   }
 
   changeEmail(e) {
-    this.setState({email: e.target.value});
+    this.setState({patient: {...this.state.patient, email: e.target.value}});
   }
 
   changeBirthdate(e) {
-    this.setState({birthdate: e.target.value});
+    this.setState({patient: {...this.state.patient, birthdate: e.target.value}});
   }
 
   changeCellphone(e) {
-    this.setState({number: e.target.value});
+    this.setState({patient: {...this.state.patient, number: e.target.value}});
   }
 
   changeStreetName(e) {
-    let address = {...this.state.address};
+    let address = {...this.state.patient.address};
     address.street = e.target.value;
 
     this.setState({
-      address,
+      patient: {
+        ...this.state.patient,
+        address,
+      },
     });
   }
 
   changeAddrNum(e) {
-    let address = {...this.state.address};
+    let address = {...this.state.patient.address};
     address.number = e.target.value;
 
     this.setState({
-      address,
+      patient: {
+        ...this.state.patient,
+        address,
+      },
     });
   }
 
   changeZipCode(e) {
-    let address = {...this.state.address};
+    let address = {...this.state.patient.address};
     address.zip = e.target.value;
 
     this.setState({
-      address,
+      patient: {
+        ...this.state.patient,
+        address,
+      },
     });
   }
 
   changeState(e) {
-    let address = {...this.state.address};
+    let address = {...this.state.patient.address};
     address.state = e.target.value;
 
     this.setState({
-      address,
+      patient: {
+        ...this.state.patient,
+        address,
+      },
     });
   }
 
@@ -107,7 +128,7 @@ class PatientForm extends Component {
           <div className="input-group">
             <input
               id="name"
-              value={this.state.name}
+              value={this.state.patient.name}
               onChange={this.changeFullName.bind(this)}
               type="text"
               className="form-control"
@@ -117,7 +138,7 @@ class PatientForm extends Component {
 
             <input
               id="email"
-              value={this.state.email}
+              value={this.state.patient.email}
               onChange={this.changeEmail.bind(this)}
               type="text"
               className="form-control"
@@ -128,7 +149,7 @@ class PatientForm extends Component {
           <div className="input-group">
             <input
               id="birthdate"
-              value={this.state.birthdate}
+              value={this.state.patient.birthdate}
               onChange={this.changeBirthdate.bind(this)}
               type="text"
               className="form-control"
@@ -138,7 +159,7 @@ class PatientForm extends Component {
 
             <input
               id="number"
-              value={this.state.number}
+              value={this.state.patient.number}
               onChange={this.changeCellphone.bind(this)}
               type="text"
               className="form-control"
@@ -149,7 +170,7 @@ class PatientForm extends Component {
           <div className="input-group">
             <input
               id="street"
-              value={this.state.address.street}
+              value={this.state.patient.address.street}
               onChange={this.changeStreetName.bind(this)}
               type="text"
               className="form-control"
@@ -159,7 +180,7 @@ class PatientForm extends Component {
 
             <input
               id="address-number"
-              value={this.state.address.number}
+              value={this.state.patient.address.number}
               onChange={this.changeAddrNum.bind(this)}
               type="text"
               className="form-control"
@@ -169,7 +190,7 @@ class PatientForm extends Component {
 
             <input
               id="zipcode"
-              value={this.state.address.zip}
+              value={this.state.patient.address.zip}
               onChange={this.changeZipCode.bind(this)}
               type="text"
               className="form-control"
@@ -179,7 +200,7 @@ class PatientForm extends Component {
 
             <input
               id="address-state"
-              value={this.state.address.state}
+              value={this.state.patient.address.state}
               onChange={this.changeState.bind(this)}
               type="text"
               className="form-control"

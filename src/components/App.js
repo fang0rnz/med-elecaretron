@@ -24,27 +24,39 @@ class App extends Component {
   }
 
   createFunction(patient) {
-    let patients = [...this.state.patients];
-    patients.push(patient);
+    let newPatients = [...this.state.patients];
+    let newPatient = {...patient, id: new Date().getTime()};
+    newPatients.push(newPatient);
+
+    this.props.db.update({clinicName: this.props.match.params.clinicId}, {$push: {patients: newPatient}});
 
     this.setState({
-      patients,
+      patients: newPatients,
     });
   }
 
-  deleteFunction(i) {
-    let patients = [...this.state.patients];
+  deleteFunction(patient) {
+    let newPatients = [...this.state.patients];
+    let deletedPatientIndex = newPatients.findIndex(iter => patient.id === iter.id);
+    newPatients.splice(deletedPatientIndex, 1);
 
-    patients.splice(i, 1);
+    this.props.db.update({'patients.id': patient.id}, {$set: {patients: newPatients}});
+
     this.setState({
-      patients,
+      patients: newPatients,
     });
   }
 
-  editFunction(i, patient) {
-    let patients = [...this.state.patients];
-    patients[i] = patient;
-    this.setState({patients: patients});
+  editFunction(patient) {
+    let newPatients = [...this.state.patients];
+    let editedPatientIndex = newPatients.findIndex(iter => patient.id === iter.id);
+    console.log(editedPatientIndex);
+
+    newPatients[editedPatientIndex] = patient;
+
+    this.props.db.update({'patients.id': patient.id}, {$set: {patients: newPatients}});
+    //this.props.db.update({'patients.id': patient.id}, {$set: {patient}});
+    this.setState({patients: newPatients});
   }
 
   render() {
@@ -52,7 +64,7 @@ class App extends Component {
       <div className="container">
         <Link to="/">
           <button action="submit" className="btn btn-primary">
-            Go
+            Back to navigator
           </button>
         </Link>
         <div className="row">
@@ -61,8 +73,8 @@ class App extends Component {
             {this.state.patients.map((patient, i) => (
               <Patient
                 key={i}
-                data={{...patient, id: i}}
-                remove={() => this.deleteFunction(i)}
+                data={{...patient}}
+                remove={() => this.deleteFunction(patient)}
                 edit={this.editFunction.bind(this)}
               />
             ))}
