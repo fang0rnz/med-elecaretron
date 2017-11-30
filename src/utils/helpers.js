@@ -52,3 +52,12 @@ export function getFunName() {
 
   return `${rando(adjectives)}-${rando(nouns)}-clinic`;
 }
+
+function fixDatePattern(currDate) {
+  var v = this.value;
+  if (v.match(/^\d{4}$/) !== null) {
+    this.value = v + '/';
+  } else if (v.match(/^\d{4}\/\d{2}$/) !== null) {
+    this.value = v + '/';
+  }
+}

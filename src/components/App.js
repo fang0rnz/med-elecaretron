@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Patient from './Patient';
 import PatientForm from './PatientForm';
 import {Link, Redirect} from 'react-router-dom';
+import {MaskedInput} from 'react-maskedinput';
 
 class App extends Component {
   constructor(props) {

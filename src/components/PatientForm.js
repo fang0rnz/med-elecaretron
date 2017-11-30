@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import MaskedInput from 'react-maskedinput';
 
 class PatientForm extends Component {
   constructor() {
@@ -140,31 +141,29 @@ class PatientForm extends Component {
               id="email"
               value={this.state.patient.email}
               onChange={this.changeEmail.bind(this)}
-              type="text"
+              type="email"
               className="form-control"
               name="email"
               placeholder="E-mail"
             />
           </div>
+
           <div className="input-group">
-            <input
-              id="birthdate"
+            <MaskedInput
+              mask="11/11/1111"
               value={this.state.patient.birthdate}
               onChange={this.changeBirthdate.bind(this)}
-              type="text"
               className="form-control"
               name="birthdate"
               placeholder="Birthdate"
             />
-
-            <input
-              id="number"
+            <MaskedInput
+              mask="(11) 11111-1111"
               value={this.state.patient.number}
               onChange={this.changeCellphone.bind(this)}
-              type="text"
               className="form-control"
               name="number"
-              placeholder="Celphone number"
+              placeholder="Cellphone number"
             />
           </div>
           <div className="input-group">
@@ -177,19 +176,18 @@ class PatientForm extends Component {
               name="street"
               placeholder="Street"
             />
-
             <input
-              id="address-number"
               value={this.state.patient.address.number}
               onChange={this.changeAddrNum.bind(this)}
               type="text"
               className="form-control"
               name="address-number"
               placeholder="Addr. number"
+              maxLength={5}
             />
 
-            <input
-              id="zipcode"
+            <MaskedInput
+              mask="11111-111"
               value={this.state.patient.address.zip}
               onChange={this.changeZipCode.bind(this)}
               type="text"
@@ -197,9 +195,8 @@ class PatientForm extends Component {
               name="zipcode"
               placeholder="Zip code"
             />
-
-            <input
-              id="address-state"
+            <MaskedInput
+              mask="AA"
               value={this.state.patient.address.state}
               onChange={this.changeState.bind(this)}
               type="text"
