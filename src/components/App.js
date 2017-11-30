@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Patient from './Patient';
 import PatientForm from './PatientForm';
+import {Link, Redirect} from 'react-router-dom';
 
 const patients = [
   {
@@ -76,6 +77,11 @@ class App extends Component {
   render() {
     return (
       <div className="container">
+        <Link to="/">
+          <button action="submit" className="btn btn-primary">
+            Go
+          </button>
+        </Link>
         <div className="row">
           <div className="col-md-12 patient-list">
             <PatientForm create={this.createFunction.bind(this)} />
