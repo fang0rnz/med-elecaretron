@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 class PatientForm extends Component {
-  constructor({patient}) {
+  constructor() {
     super();
     this.initialState = {
       name: '',
@@ -16,20 +16,25 @@ class PatientForm extends Component {
       },
       id: '',
     };
-    this.state = {
-      name: patient && patient.name,
-      email: patient && patient.email,
-      birthdate: patient && patient.birthdate,
-      number: patient && patient.number,
-      address: {
-        number: patient && patient.address.number,
-        zip: patient && patient.address.zip,
-        state: patient && patient.address.state,
-        street: patient && patient.address.street,
-      },
-      id: patient && patient.id,
-      isCreating: patient ? false : true,
-    };
+  }
+
+  componentWillMount() {
+    this.setState(this.initialState);
+    if (this.props.patient)
+      this.setState({
+        name: this.props.patient && this.props.patient.name,
+        email: this.props.patient && this.props.patient.email,
+        birthdate: this.props.patient && this.props.patient.birthdate,
+        number: this.props.patient && this.props.patient.number,
+        address: {
+          number: this.props.patient && this.props.patient.address.number,
+          zip: this.props.patient && this.props.patient.address.zip,
+          state: this.props.patient && this.props.patient.address.state,
+          street: this.props.patient && this.props.patient.address.street,
+        },
+        id: this.props.patient && this.props.patient.id,
+        isCreating: this.props.patient ? false : true,
+      });
   }
 
   submit() {

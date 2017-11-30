@@ -6,12 +6,18 @@ import ClinicNavigator from './components/ClinicNavigator';
 import App from './components/App';
 import registerServiceWorker from './registerServiceWorker';
 
+const nedb = window.require('electron').remote.getGlobal('sharedObj').prop1;
+
+const renderClinicNavigatorWithDb = props => <ClinicNavigator db={nedb} {...props} />;
+
+const renderAppWithDb = props => <App db={nedb} {...props} />;
+
 const Root = () => {
   return (
     <Router>
       <div>
-        <Route exact path="/" component={ClinicNavigator} />
-        <Route path="/clinic/:clinicId" component={App} />
+        <Route exact path="/" render={renderClinicNavigatorWithDb} />
+        <Route path="/clinic/:clinicId" render={renderAppWithDb} />
       </div>
     </Router>
   );
